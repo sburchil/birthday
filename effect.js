@@ -7,6 +7,9 @@ var audio = $('.song')[0];
 $('document').ready(function() {
 
   $('#dance1, #dance2').hide();
+  var annieVid = $('#annie');
+  var darrellVid = $('#darrell');
+  var owenVid = $('#owen');
 
   $('.num21').css('left', $(window).width()/2 - 80);
   $('.num21').css('top', $(window).height()/2 - 100);
@@ -187,15 +190,15 @@ $('document').ready(function() {
     $('#b8').attr('id', 'b88')
     $('#b9').attr('id', 'b99')
 
-    $('#b11').animate({ top: 240, left: vw - 450 }, 500);
-    $('#b22').animate({ top: 240, left: vw - 350 }, 500);
-    $('#b33').animate({ top: 240, left: vw - 250 }, 500);
-    $('#b44').animate({ top: 240, left: vw - 150 }, 500);
-    $('#b55').animate({ top: 240, left: vw - 50 }, 500);
-    $('#b66').animate({ top: 240, left: vw + 50 }, 500);
-    $('#b77').animate({ top: 240, left: vw + 150 }, 500);
-    $('#b88').animate({ top: 240, left: vw + 250 }, 500);
-    $('#b99').animate({ top: 240, left: vw + 350 }, 500);
+    $('#b11').animate({ top: 240, left: vw - 450 }, 1500);
+    $('#b22').animate({ top: 240, left: vw - 350 }, 1500);
+    $('#b33').animate({ top: 240, left: vw - 250 }, 1500);
+    $('#b44').animate({ top: 240, left: vw - 150 }, 1500);
+    $('#b55').animate({ top: 240, left: vw - 50 }, 1500);
+    $('#b66').animate({ top: 240, left: vw + 50 }, 1500);
+    $('#b77').animate({ top: 240, left: vw + 150 }, 1500);
+    $('#b88').animate({ top: 240, left: vw + 250 }, 1500);
+    $('#b99').animate({ top: 240, left: vw + 350 }, 1500);
 
     $('.balloons').css('opacity', '0.9');
     $('.balloons h2').fadeIn(3000);
@@ -257,12 +260,69 @@ $('document').ready(function() {
 
     $('.num21').animate({
       opacity: 1,
-    }, 2000, () => {
+    }, 2000);
+
+    congrats.onended = () => {
       $('#turnt').animate({
         opacity: 1,
-      }, 2000);
-    })
+      }, 2000, () => {
+        $('#happy_birthday').fadeIn('show');
+      });
+    }
   }
+
+
+  $('#happy_birthday').click(function() {
+    $(this).fadeOut('slow');
+    $('#dance1, #dance2').animate({
+      opacity: 0,
+    }, 2000);
+    $('#b11,#b44,#b55,#b77,#b99').animate({
+      opacity: 0,
+    }, 2000);
+    $('#b22,#b33,#b66,#b88').animate({
+      opacity: 0,
+    }, 2000);
+    $('.num21, #turnt').animate({
+      opacity: 0,
+    }, 2000, () => {
+      annieVid.fadeIn(2000).promise().done(() => {
+        annieVid[0].play();
+        annieVid[0].onended = () => {
+          annieVid.fadeOut(2000).promise().done(() => {
+            darrellVid.fadeIn(2000).promise().done(() => {
+              darrellVid[0].play();
+              darrellVid[0].onended = () => {
+                darrellVid.fadeOut(2000).promise().done(() => {
+                  owenVid.fadeIn(2000).promise().done(() => {
+                    owenVid[0].play();
+                    owenVid[0].onended = () => {
+                      owenVid.fadeOut(2000).promise().done(() => {
+                        $('.num21').animate({
+                          opacity: 1,
+                        }, 2000);
+                        $('#dance1, #dance2').animate({
+                          opacity: 1,
+                        }, 2000);
+                        $('#b11,#b44,#b55,#b77,#b99').animate({
+                          opacity: 1,
+                        }, 2000);
+                        $('#b22,#b33,#b66,#b88').animate({
+                          opacity: 1,
+                        }, 2000);
+                      });
+                    }
+                  })
+                })
+              }
+            });
+          });
+        }
+      });
+    });
+
+  });
+
 });
 
 
